@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Sample_Bluetooth</string>
+    <string name="search">Search</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="title_dialog_pairedDevices">List of Paired Devices:</string>
+    <string name="discover">Discover</string>
+    <string name="device_name">Device Name</string>
+    <string name="device_address">Device Address</string>
+</resources>

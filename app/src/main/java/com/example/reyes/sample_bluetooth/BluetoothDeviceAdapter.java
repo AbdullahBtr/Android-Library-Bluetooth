@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class BluetoothDeviceAdapter extends ArrayAdapter<BluetoothDevice> {
 
     // reference - https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
-    public BluetoothDeviceAdapter(Context context, ArrayList<BluetoothDevice> btDevices) {
+    BluetoothDeviceAdapter(Context context, ArrayList<BluetoothDevice> btDevices) {
         super(context, 0, btDevices);
     }
 

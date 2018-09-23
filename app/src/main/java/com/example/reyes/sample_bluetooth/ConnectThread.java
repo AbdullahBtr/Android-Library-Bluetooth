@@ -1,8 +1,10 @@
 package com.example.reyes.sample_bluetooth;
 
+import android.app.Notification;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.os.Handler;
 import android.util.Log;
 
 import java.io.IOException;
@@ -16,29 +18,35 @@ public class ConnectThread extends Thread {
     private final BluetoothAdapter mBluetoothAdapter;
     private final BluetoothSocket mmSocket;
     private final BluetoothDevice mmDevice;
+    private static Handler mHandler;
+    private static ConnectedThread mConnectedThread;
+
     // Default UUID
     private UUID DEFAULT_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
-    public ConnectThread(BluetoothDevice device, BluetoothAdapter adapter) {
+    public ConnectThread(BluetoothDevice device, BluetoothAdapter adapter, Handler handler) {
         // Use a temporary object that is later assigned to mmSocket
         // because mmSocket is final.
         BluetoothSocket tmp = null;
+        mHandler = handler;
         mmDevice = device;
         mBluetoothAdapter = adapter;
+        mConnectedThread = null;
+
 
         try {
             Log.i(TAG, "Device Name: " + mmDevice.getName());
-            Log.i(TAG, "Device UUID: " + mmDevice.getUuids()[0].getUuid());
+            Log.i(TAG, "Device UUID: " + mmDevice.fetchUuidsWithSdp());//.getUuids()[0].getUuid());
             // Get a BluetoothSocket to connect with the given BluetoothDevice.
             // MY_UUID is the app's UUID string, also used in the server code.
 
-            tmp = device.createRfcommSocketToServiceRecord(mmDevice.getUuids()[0].getUuid());
+            tmp = mmDevice.createRfcommSocketToServiceRecord(mmDevice.getUuids()[0].getUuid());
         }
         catch (NullPointerException e)
         {
-            Log.d(TAG, " UUID from device is null, Using Default UUID, Device name: " + device.getName());
+            Log.d(TAG, " UUID from device is null, Using Default UUID, Device name: " + mmDevice.getName());
             try {
-                tmp = device.createRfcommSocketToServiceRecord(DEFAULT_UUID);
+                tmp = mmDevice.createRfcommSocketToServiceRecord(DEFAULT_UUID);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -68,6 +76,8 @@ public class ConnectThread extends Thread {
         // The connection attempt succeeded. Perform work associated with
         // the connection in a separate thread.
         //manageMyConnectedSocket(mmSocket);
+        mConnectedThread = new ConnectedThread(mmSocket, mHandler);
+        mConnectedThread.start();
     }
 
     // Closes the client socket and causes the thread to finish.
@@ -78,4 +88,5 @@ public class ConnectThread extends Thread {
             Log.e(TAG, "Could not close the client socket", e);
         }
     }
+
 }

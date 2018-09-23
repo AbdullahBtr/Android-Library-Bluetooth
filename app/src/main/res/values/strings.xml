@@ -7,4 +7,6 @@
     <string name="discover">Discover</string>
     <string name="device_name">Device Name</string>
     <string name="device_address">Device Address</string>
+    <string name="action_search">Search</string>
+    <string name="action_compose">Compose</string>
 </resources>

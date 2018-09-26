@@ -82,15 +82,17 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void handleMessage(Message msg) {
-            byte[] writeBuf = (byte[]) msg.obj;
+            //byte[] writeBuf = (byte[]) msg.obj;
+            String writeBuf = (String) msg.obj;
+
             int begin = (int)msg.arg1;
             int end = (int)msg.arg2;
 
             switch(msg.what) {
                 case 1:
-                    String writeMessage = new String(writeBuf);
+                    //String writeMessage = new String(writeBuf);
                     //writeMessage = writeMessage.substring(begin, end);
-                    editText_rawData.append(writeMessage + "\n");
+                    editText_rawData.append(writeBuf + "\n");
                     break;
             }
         }
@@ -109,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         editText_rawData = findViewById(R.id.editText_rawData);
-        editText_rawData.clearFocus();
 
 
     }

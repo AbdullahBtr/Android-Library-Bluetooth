@@ -8,6 +8,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 
 /***
  * Sending and Receiving Data via Bluetooth with and Android Device
@@ -43,13 +44,13 @@ public class ConnectedThread extends Thread {
             try {
                 availableBytes = mmInStream.available();
 
-                if(availableBytes > 0 ) {
+                if(availableBytes == 32) {
                     byte[] buffer = new byte[availableBytes];
                     bytes = mmInStream.read(buffer);
 
                     Log.d("mmInStream.read(buffer)", new String(buffer));
                     if( bytes > 0 ) {
-                        mHandler.obtainMessage(1, bytes, -1, buffer).sendToTarget();
+                        mHandler.obtainMessage(1, bytes, -1, CollectSensorData(buffer)).sendToTarget();
                     }
                 }
 
@@ -62,8 +63,15 @@ public class ConnectedThread extends Thread {
         }
     }
 
-    private String CollectSensorData() {
+    private String CollectSensorData(byte[] rawData) throws UnsupportedEncodingException {
         String sensorData = "";
+
+        if(rawData.length == 32) {
+            if(rawData[0] == 0x42 && rawData[1] == 0x4d) {
+                sensorData += new String(rawData, "UTF-8");
+            }
+        }
+
 
 
 

@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     String writeMessage = new String(writeBuf);
                     //writeMessage = writeMessage.substring(begin, end);
-                    editText_rawData.setText(writeMessage);
+                    editText_rawData.append(writeMessage + "\n");
                     break;
             }
         }
@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         editText_rawData = findViewById(R.id.editText_rawData);
+        editText_rawData.clearFocus();
 
 
     }

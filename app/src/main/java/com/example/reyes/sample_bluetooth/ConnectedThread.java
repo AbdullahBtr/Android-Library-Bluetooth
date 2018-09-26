@@ -61,6 +61,14 @@ public class ConnectedThread extends Thread {
             }
         }
     }
+
+    private String CollectSensorData() {
+        String sensorData = "";
+
+
+
+        return sensorData;
+    }
     //public void write(byte[] bytes) {
     //    try {
     //        //mmOutStream.write(bytes);

@@ -39,36 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private BluetoothDeviceAdapter mNewDevicesArrayAdapter;
     private BluetoothDevice device;
     private ConnectThread ct;
-    private ListView btListView;
     private EditText editText_rawData;
-
-    private BroadcastReceiver blueToothReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            Log.d("onReceive: ", "Attempt to get received data...");
-
-            assert action != null;
-            if (action.equals(BluetoothDevice.ACTION_FOUND)) {
-                device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    pairedDevices.add(device);
-
-                }
-            } else if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
-                if (mNewDevicesArrayAdapter.getCount() == 0) {
-                    Toast.makeText(MainActivity.this, "No devices found", Toast.LENGTH_SHORT).show();
-                }
-            }
-            mNewDevicesArrayAdapter = new BluetoothDeviceAdapter(MainActivity.this, pairedDevices);
-            //Attach the adapter to a ListView
-            btListView = findViewById(R.id.listView_discoveredDevices);
-            btListView.setAdapter(mNewDevicesArrayAdapter);
-
-        }
-    };
-
     private static Handler mHandler;
+    private BroadcastReceiver blueToothReceiver;
 
     public MainActivity() {
 
@@ -85,6 +58,33 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        blueToothReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                Log.d("onReceive: ", "Attempt to get received data...");
+
+                assert action != null;
+                if (action.equals(BluetoothDevice.ACTION_FOUND)) {
+                    device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                    if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
+                        pairedDevices.add(device);
+
+                    }
+                } else if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
+                    if (mNewDevicesArrayAdapter.getCount() == 0) {
+                        Toast.makeText(MainActivity.this, "No devices found", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                mNewDevicesArrayAdapter = new BluetoothDeviceAdapter(MainActivity.this, pairedDevices);
+                //Attach the adapter to a ListView
+                ListView btListView = findViewById(R.id.listView_discoveredDevices);
+                btListView.setAdapter(mNewDevicesArrayAdapter);
+
+            }
+        };
+
     }
 
 
@@ -95,13 +95,11 @@ public class MainActivity extends AppCompatActivity {
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        bt = new SearchBluetoothDevices(getApplicationContext(), MainActivity.this);
+        bt = new SearchBluetoothDevices(getApplicationContext());
         ct = null;
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         editText_rawData = findViewById(R.id.editText_rawData);
-
-
     }
 
     @Override
@@ -122,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
                 .setItems(boundDeviceNames, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which ) {
                         // The 'which' argument contains the index position
-                        BluetoothDevice bluetoothDevice = bluetoothDevices.get(which);
 
                         // Connect to the bluetooth device
                     }

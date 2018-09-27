@@ -32,5 +32,4 @@ class SearchBluetoothDevices {
             return null;
         }
     }
-
 }

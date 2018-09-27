@@ -32,7 +32,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private SearchBluetoothDevices bt;
-    private ArrayList<BluetoothDevice> bluetoothDevices = null;
     private String[] boundDeviceNames = null;
     private ArrayList<BluetoothDevice> pairedDevices = new ArrayList<>();
     private BluetoothAdapter mBluetoothAdapter;
@@ -111,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void search_onClick(final View view) {
-        bluetoothDevices = new ArrayList<>(bt.GetPairedBluetoothDevices());
+        ArrayList<BluetoothDevice> bluetoothDevices = new ArrayList<>(bt.GetPairedBluetoothDevices());
         GetBluetoothDevices(bluetoothDevices);
 
 

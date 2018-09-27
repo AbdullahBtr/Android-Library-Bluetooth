@@ -28,7 +28,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.logging.LogRecord;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,56 +46,46 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            //device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
             Log.d("onReceive: ", "Attempt to get received data...");
-            //Toast.makeText(MainActivity.this, "Looking for device...", Toast.LENGTH_SHORT).show();
 
-
+            assert action != null;
             if (action.equals(BluetoothDevice.ACTION_FOUND)) {
-                //Toast.makeText(MainActivity.this, "Device Found!", Toast.LENGTH_SHORT).show();
                 device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                //pairedDevices.add(device);
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    //Toast.makeText(MainActivity.this, "Device Found!", Toast.LENGTH_SHORT).show();
-                    //mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
                     pairedDevices.add(device);
-                    //mNewDevicesArrayAdapter.notifyDataSetChanged();
 
                 }
             } else if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
                 if (mNewDevicesArrayAdapter.getCount() == 0) {
                     Toast.makeText(MainActivity.this, "No devices found", Toast.LENGTH_SHORT).show();
-                    //mNewDevicesArrayAdapter.add("No new device found");
-                    //mNewDevicesArrayAdapter.notifyDataSetChanged();
                 }
             }
             mNewDevicesArrayAdapter = new BluetoothDeviceAdapter(MainActivity.this, pairedDevices);
             //Attach the adapter to a ListView
-            btListView = (ListView) findViewById(R.id.listView_discoveredDevices);
+            btListView = findViewById(R.id.listView_discoveredDevices);
             btListView.setAdapter(mNewDevicesArrayAdapter);
 
         }
     };
 
-    private Handler mHandler = new Handler() {
+    private static Handler mHandler;
 
-        @Override
-        public void handleMessage(Message msg) {
-            //byte[] writeBuf = (byte[]) msg.obj;
-            String writeBuf = (String) msg.obj;
+    public MainActivity() {
 
-            int begin = (int)msg.arg1;
-            int end = (int)msg.arg2;
+        mHandler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message message) {
+                String writeBuf = (String) message.obj;
 
-            switch(msg.what) {
-                case 1:
-                    //String writeMessage = new String(writeBuf);
-                    //writeMessage = writeMessage.substring(begin, end);
-                    editText_rawData.append(writeBuf + "\n");
-                    break;
+                switch(message.what) {
+                    case 1:
+                        editText_rawData.append(writeBuf + "\n");
+                        break;
+                }
+                return false;
             }
-        }
-    };
+        });
+    }
 
 
     @Override
@@ -179,8 +168,6 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, permissionsToRequest, CODE);
         }
 
-
-        //Toast.makeText(this, "Attempting to discover devices...", Toast.LENGTH_SHORT).show();
         Log.d("DiscBTDevices", "Attempting to discover devices...");
 
         //IntentFilter will match the action specified
@@ -188,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
         filter.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
 
         //broadcast receiver for any matching filter
-        //registerReceiver(blueToothReceiver, filter);
         if(mBluetoothAdapter.isDiscovering()) {
             // Bluetooth is already in discovery mode, we cancel to restart it again
             mBluetoothAdapter.cancelDiscovery();
@@ -198,19 +184,16 @@ public class MainActivity extends AppCompatActivity {
         this.registerReceiver(blueToothReceiver, filter);
         mBluetoothAdapter.startDiscovery();
 
-
         // Create the adapter to convert to array of views
         BluetoothDeviceAdapter btdAdapter = new BluetoothDeviceAdapter(this, pairedDevices);
 
         //Attach the adapter to a ListView
-        ListView btListView = (ListView) findViewById(R.id.listView_discoveredDevices);
+        ListView btListView = findViewById(R.id.listView_discoveredDevices);
         btListView.setAdapter(btdAdapter);
 
         btListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //mNewDevicesArrayAdapter.getItem(i);
-
                 readBtData(i);
 
             }
@@ -241,7 +224,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void cancelReadBtData_onClick(View view) {
         ct.cancel();
-        //ct = null;
     }
 
 }

@@ -15,40 +15,27 @@ import java.util.Set;
 
 
 public class SearchBluetoothDevices {
-
-    private static final int REQUEST_ENABLE_BT = 1;
-    private Activity myActivity;
     private BluetoothAdapter mBluetoothAdapter;
-    private BluetoothDevice device;
-    private ArrayList<BluetoothDevice> pairedDevices = new ArrayList<>();
-    private BluetoothDeviceAdapter mNewDevicesArrayAdapter;
-    ProgressDialog dialog;
-    Context _context;
-    BluetoothAdapter adapter;
+    private Context _context;
 
 
-    public SearchBluetoothDevices(Context context, Activity activity) {
+    SearchBluetoothDevices(Context context, Activity activity) {
 
-        myActivity = activity;
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         _context = context;
-        dialog = new ProgressDialog(_context);
-        adapter = BluetoothAdapter.getDefaultAdapter();
-        //blueToothReceiver = null;
-        mNewDevicesArrayAdapter = new BluetoothDeviceAdapter(_context, pairedDevices);
+        ProgressDialog dialog = new ProgressDialog(_context);
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        ArrayList<BluetoothDevice> pairedDevices = new ArrayList<>();
+        BluetoothDeviceAdapter mNewDevicesArrayAdapter = new BluetoothDeviceAdapter(_context, pairedDevices);
     }
 
-    public ArrayList<BluetoothDevice> GetPairedBluetoothDevices() {
+    ArrayList<BluetoothDevice> GetPairedBluetoothDevices() {
 
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-        ArrayList<BluetoothDevice> alDevices = new ArrayList<BluetoothDevice>();
 
         if(pairedDevices.size() > 0) {
             Toast.makeText(_context, "Finished with the discovery!", Toast.LENGTH_LONG).show();
-            for (BluetoothDevice bt : pairedDevices) {
-                alDevices.add(bt);
-            }
-            return alDevices;
+            return new ArrayList<>(pairedDevices);
         } else {
             return null;
         }
@@ -70,8 +57,6 @@ public class SearchBluetoothDevices {
             mBluetoothAdapter.cancelDiscovery();
             _context.unregisterReceiver(blueToothReceiver);
         } mBluetoothAdapter.startDiscovery();
-
-        //return pairedDevices;
     }
 
 }

@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
                 switch(message.what) {
                     case 1:
-                        editText_rawData.append(writeBuf + "\n");
+                        editText_rawData.setText(writeBuf);
                         break;
                 }
                 return false;

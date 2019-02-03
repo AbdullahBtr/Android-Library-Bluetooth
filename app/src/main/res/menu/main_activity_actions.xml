@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.home.activities.TransactionSearchActivity">
 
-        <item android:id="@+id/action_search"
-            app:actionViewClass="android.support.v7.widget.SearchView"
-            android:icon="@drawable/ic_menu_search"
-            android:title="@string/action_search"
-            app:showAsAction="ifRoom"/>
+     <item android:id="@+id/action_search"
+         app:actionViewClass="android.support.v7.widget.SearchView"
+         android:icon="@drawable/ic_menu_search"
+         app:showAsAction="ifRoom"
+         android:title="@string/search" />
 
-        <item android:id="@+id/action_compose"
-            android:icon="@drawable/ic_menu_options"
-            android:title="@string/action_compose"
-            app:showAsAction="ifRoom"/>
-    </menu>
+     <item android:id="@+id/action_compose"
+         android:icon="@drawable/ic_menu_options"
+         android:title="@string/action_compose"
+         app:showAsAction="ifRoom"/>
+</menu>

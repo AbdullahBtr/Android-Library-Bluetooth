@@ -20,9 +20,11 @@ import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText editText_rawData;
     private static Handler mHandler;
     private BroadcastReceiver blueToothReceiver;
+
+    private AlertDialog dialog;
 
     public MainActivity() {
 
@@ -106,6 +110,45 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch(item.getItemId()) {
+            case R.id.id_menu_bluetooth:
+                // Do something here for the bluetooth button to be clicked
+                openBluetoothDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openBluetoothDialog() {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_bluetooth, null);
+        Button mCancelButton = mView.findViewById(R.id.id_button_dialog_cancelBluetooth);
+
+
+        mCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Close Dialog Window here
+                dialog.dismiss();
+            }
+        });
+
+        mBuilder.setView(mView);
+        dialog = mBuilder.create();
+
+
+        dialog.setTitle("My Dialog Title");
+        dialog.show();
+
+        //ProgressBar dialogProgressBar = (ProgressBar)dialog.findViewById(R.id.id_bluetooth_progressBar);
+        //dialogProgressBar.setVisibility(View.VISIBLE);
+
     }
 
     public void search_onClick(final View view) {

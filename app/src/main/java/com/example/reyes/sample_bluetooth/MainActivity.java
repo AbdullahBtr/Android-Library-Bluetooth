@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 mNewDevicesArrayAdapter = new BluetoothDeviceAdapter(MainActivity.this, pairedDevices);
                 //Attach the adapter to a ListView
-                ListView btListView = findViewById(R.id.listView_discoveredDevices);
+                ListView btListView = dialog.findViewById(R.id.id_dialog_bluetooth);
                 btListView.setAdapter(mNewDevicesArrayAdapter);
 
             }

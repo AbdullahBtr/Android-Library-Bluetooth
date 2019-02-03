@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 mNewDevicesArrayAdapter = new BluetoothDeviceAdapter(MainActivity.this, pairedDevices);
                 //Attach the adapter to a ListView
-                ListView btListView = dialog.findViewById(R.id.id_dialog_bluetooth);
+                ListView btListView = dialog.findViewById(R.id.id_listView_bluetoothDevices);
                 btListView.setAdapter(mNewDevicesArrayAdapter);
 
             }
@@ -141,10 +141,9 @@ public class MainActivity extends AppCompatActivity {
 
         mBuilder.setView(mView);
         dialog = mBuilder.create();
-
-
-        dialog.setTitle("My Dialog Title");
         dialog.show();
+
+        discover_onClick(mView);
 
         //ProgressBar dialogProgressBar = (ProgressBar)dialog.findViewById(R.id.id_bluetooth_progressBar);
         //dialogProgressBar.setVisibility(View.VISIBLE);
@@ -226,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
         BluetoothDeviceAdapter btdAdapter = new BluetoothDeviceAdapter(this, pairedDevices);
 
         //Attach the adapter to a ListView
-        ListView btListView = findViewById(R.id.listView_discoveredDevices);
+        ListView btListView = dialog.findViewById(R.id.id_listView_bluetoothDevices);
         btListView.setAdapter(btdAdapter);
 
         btListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

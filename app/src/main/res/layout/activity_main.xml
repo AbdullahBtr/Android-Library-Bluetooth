@@ -1,80 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:weightSum="100"
+    tools:context=".MainActivity"
+    android:padding="10dp">
 
-    <Button
-        android:id="@+id/button_search"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="48dp"
-        android:onClick="search_onClick"
-        android:text="@string/search"
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="821dp" />
+        android:gravity="top"
+        android:layout_weight="75"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button_discover"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textView_rawData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:text="@string/raw_data" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+
+            <ListView
+                android:id="@+id/listView_discoveredDevices"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="50"
+                android:background="@drawable/edittext_background"/>
+
+
+            <EditText
+                android:id="@+id/editText_rawData"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="50"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="textMultiLine" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/button_search"
-        android:onClick="discover_onClick"
-        android:text="@string/discover" />
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:layout_weight="25"
+        android:layout_margin="5dp">
 
-    <ListView
-        android:id="@+id/listView_discoveredDevices"
-        android:layout_width="323dp"
-        android:layout_height="500dp"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/edittext_background"/>
+        <Button
+            android:id="@+id/button_discover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="discover_onClick"
+            android:layout_gravity="bottom"
+            android:text="@string/discover" />
 
-    <EditText
-        android:id="@+id/editText_rawData"
-        android:focusable="false"
-        android:autofillHints="Raw Data Here"
-        android:layout_width="307dp"
-        android:layout_height="502dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="356dp"
-        android:background="@drawable/edittext_background"
-        android:ems="10"
-        android:inputType="textMultiLine" />
+        <Button
+            android:id="@+id/button_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:onClick="cancelReadBtData_onClick"
+            android:text="@string/cancel" />
 
-    <Button
-        android:id="@+id/button_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:onClick="cancelReadBtData_onClick"
-        android:layout_alignTop="@+id/button_search"
-        android:layout_marginStart="123dp"
-        android:text="@string/cancel" />
-
-    <TextView
-        android:id="@+id/textView_discoveredDevices"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText_rawData"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="111dp"
-        android:layout_marginLeft="111dp"
-        android:text="Discovered Devices" />
-
-    <TextView
-        android:id="@+id/textView_rawData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView_discoveredDevices"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="461dp"
-        android:layout_marginLeft="461dp"
-        android:text="Raw Data" />
+    </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

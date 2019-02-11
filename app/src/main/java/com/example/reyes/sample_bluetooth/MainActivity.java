@@ -30,6 +30,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.bluetoothlibrary.BluetoothDeviceAdapter;
+import com.example.bluetoothlibrary.ConnectThread;
 import com.example.bluetoothlibrary.SearchBluetoothDevices;
 
 import java.util.ArrayList;

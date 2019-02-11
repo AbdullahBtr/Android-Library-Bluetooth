@@ -1,4 +1,4 @@
-package com.example.reyes.sample_bluetooth;
+package com.example.bluetoothlibrary;
 
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
@@ -18,17 +18,18 @@ public class ConnectedThread extends Thread {
     private final BluetoothSocket mmSocket;
     private InputStream mmInStream;
     private final Handler mHandler;
-    private SensorData sd;
+    // private SensorData sd;
 
      ConnectedThread(BluetoothSocket socket, Handler handler) {
         mmSocket = socket;
         mHandler = handler;
         mmInStream = null;
-        sd = new SensorData();
+        // sd = new SensorData();
         try {
             mmInStream = mmSocket.getInputStream();
         } catch (IOException ignored) { }
     }
+
     public void run() {
         int availableBytes;
         int bytes;
@@ -39,11 +40,11 @@ public class ConnectedThread extends Thread {
                 if(availableBytes == 32) {
                     byte[] buffer = new byte[availableBytes];
                     bytes = mmInStream.read(buffer);
-                    sd.SetAllBytes(buffer);
+                    // sd.SetAllBytes(buffer);
 
                     Log.d("mmInStream.read(buffer)", new String(buffer));
                     if( bytes > 0 ) {
-                        mHandler.obtainMessage(1, bytes, -1, sd.ToString()).sendToTarget();
+                        // mHandler.obtainMessage(1, bytes, -1, sd.ToString()).sendToTarget();
                     }
                 }
             } catch (IOException e) {

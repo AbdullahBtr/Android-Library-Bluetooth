@@ -29,6 +29,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.bluetoothlibrary.BluetoothDeviceAdapter;
+import com.example.bluetoothlibrary.SearchBluetoothDevices;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -145,14 +148,10 @@ public class MainActivity extends AppCompatActivity {
 
         discover_onClick(mView);
 
-        //ProgressBar dialogProgressBar = (ProgressBar)dialog.findViewById(R.id.id_bluetooth_progressBar);
-        //dialogProgressBar.setVisibility(View.VISIBLE);
-
     }
 
     public void search_onClick(final View view) {
-        ArrayList<BluetoothDevice> bluetoothDevices = new ArrayList<>(bt.GetPairedBluetoothDevices());
-        GetBluetoothDevices(bluetoothDevices);
+        GetBluetoothDevices(bt.GetPairedBluetoothDevices());
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogStyle));

@@ -1,4 +1,4 @@
-package com.example.reyes.sample_bluetooth;
+package com.example.bluetoothlibrary;
 
 
 import android.bluetooth.BluetoothAdapter;
@@ -10,18 +10,18 @@ import java.util.ArrayList;
 import java.util.Set;
 
 
-class SearchBluetoothDevices {
+public class SearchBluetoothDevices {
     private BluetoothAdapter mBluetoothAdapter;
     private Context _context;
 
 
-    SearchBluetoothDevices(Context context) {
+    public SearchBluetoothDevices(Context context) {
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         _context = context;
     }
 
-    ArrayList<BluetoothDevice> GetPairedBluetoothDevices() {
+    public ArrayList<BluetoothDevice> GetPairedBluetoothDevices() {
 
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 

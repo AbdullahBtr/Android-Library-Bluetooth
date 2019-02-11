@@ -1,4 +1,4 @@
-package com.example.reyes.sample_bluetooth;
+package com.example.bluetoothlibrary;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class BluetoothDeviceAdapter extends ArrayAdapter<BluetoothDevice> {
 
     // reference - https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
-    BluetoothDeviceAdapter(Context context, ArrayList<BluetoothDevice> btDevices) {
+    public BluetoothDeviceAdapter(Context context, ArrayList<BluetoothDevice> btDevices) {
         super(context, 0, btDevices);
     }
 
